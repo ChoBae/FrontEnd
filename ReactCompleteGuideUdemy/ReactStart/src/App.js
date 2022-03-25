@@ -1,5 +1,5 @@
 import Expenses from "./components/Expense/Expenses";
-
+import NewExpense from "./components/NewExpense/NewExpense";
 function App() {
   // 프롭스 값
   const expenses = [
@@ -25,7 +25,7 @@ function App() {
   ];
   return (
     <div>
-      <h2>Let's get started!</h2>
+      <NewExpense/>
       <Expenses items={expenses}/>
     </div>
   );

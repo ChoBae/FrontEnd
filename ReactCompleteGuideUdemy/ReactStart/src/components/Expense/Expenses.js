@@ -1,10 +1,20 @@
+import React, { useState } from "react";
 import ExpenseItem from "./ExpenseItem";
+import ExpenseFilter from "./ExpenseFilter";
 import Card from "../UI/Card"
 import "./Expenses.css"
-function Expenses(props) {
+
+const Expenses = (props) => {
+  // 필터 년도 state 기본값 '2020' 설정
+  const [filteredYear, setFiteredYear] = useState("2020");
+  // state 끌어오기
+  const dropDownHandler = (selectedYears) => {
+    setFiteredYear(selectedYears);
+  };
   return (
     <Card className="expenses">
-
+      {/* state 끌어오기 */}
+      <ExpenseFilter selected={filteredYear} onSaveDropDown={dropDownHandler}/>
       <ExpenseItem
         title={props.items[0].title}
         amount={props.items[0].amount}

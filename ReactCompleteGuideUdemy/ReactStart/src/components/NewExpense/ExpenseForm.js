@@ -45,22 +45,23 @@ const ExpenseForm = (props) => {
     event.preventDefault();
     const userData = {
       title: changedTitle,
-      amount: changedAmount,
+      amount: +changedAmount,
       date: new Date(changedDate),
     };
     // 상향식 컴포넌트 통신
     props.onSaveExpense(userData);
     // 양방향 바인딩 과정 위에서 데이터를 초기화 시켜줌
-    setChangedTitle('');
-    setChangedAmount('');
-    setChangedDate('');
+    setChangedTitle("");
+    setChangedAmount("");
+    setChangedDate("");
   };
 
   return (
+    // 지출 내역 추가 폼
     <form onSubmit={submitHandler}>
       <div className="new-expense__controls">
         <div className="new-expense__control">
-          <label>Title</label>
+          <label>지출 내용</label>
           <input
             type="text"
             value={changedTitle}
@@ -68,7 +69,7 @@ const ExpenseForm = (props) => {
           />
         </div>
         <div className="new-expense__control">
-          <label>Amount</label>
+          <label>비용</label>
           <input
             type="number"
             min="0.1"
@@ -78,7 +79,7 @@ const ExpenseForm = (props) => {
           />
         </div>
         <div className="new-expense__control">
-          <label>Date</label>
+          <label>날짜</label>
           <input
             type="date"
             min="2019-01-01"
@@ -90,6 +91,9 @@ const ExpenseForm = (props) => {
       </div>
 
       <div className="new-expense__actions">
+        <button type="button" onClick={props.onCancel}> {/* 상위 컴포넌트의 함수를 실행하는 과정 */}
+          취소
+        </button>
         <button type="submit">지출 추가</button>
       </div>
     </form>

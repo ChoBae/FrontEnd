@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import ExpenseItem from "./ExpenseItem";
+import ExpenseList from "./ExpenseList";
 import ExpenseFilter from "./ExpenseFilter";
-import Card from "../UI/Card"
-import "./Expenses.css"
+import Card from "../UI/Card";
+import "./Expenses.css";
+import ExpenseChart from "./ExpenseChart";
 
 const Expenses = (props) => {
   // 필터 년도 state 기본값 '2020' 설정
@@ -11,31 +12,21 @@ const Expenses = (props) => {
   const dropDownHandler = (selectedYears) => {
     setFiteredYear(selectedYears);
   };
+  // 선택한 연도의 비용지출 필터링
+  const filteredExpenses = props.items.filter((expense) => {
+    return expense.date.getFullYear().toString() === filteredYear;
+  });
+
   return (
+    // jsx 스니펫으로 컴포넌트를 묶어준다. -> lean
     <Card className="expenses">
       {/* state 끌어오기 */}
-      <ExpenseFilter selected={filteredYear} onSaveDropDown={dropDownHandler}/>
-      <ExpenseItem
-        title={props.items[0].title}
-        amount={props.items[0].amount}
-        date={props.items[0].date}
-      ></ExpenseItem>
-      <ExpenseItem
-        title={props.items[1].title}
-        amount={props.items[1].amount}
-        date={props.items[1].date}
-      ></ExpenseItem>
-      <ExpenseItem
-        title={props.items[2].title}
-        amount={props.items[2].amount}
-        date={props.items[2].date}
-      ></ExpenseItem>
-      <ExpenseItem
-        title={props.items[3].title}
-        amount={props.items[3].amount}
-        date={props.items[3].date}
-      ></ExpenseItem>
+      <ExpenseFilter selected={filteredYear} onSaveDropDown={dropDownHandler} />
+      {/* 차트 컴포넌트 */}
+      <ExpenseChart expenses={filteredExpenses} />
+      {/* 해당연도 비용 리스트 생성, 파라미터값으로 해당연도의 비용 리스트를 보내줌 */}
+      {<ExpenseList items={filteredExpenses} />}
     </Card>
   );
-}
+};
 export default Expenses;

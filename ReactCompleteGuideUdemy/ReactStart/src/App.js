@@ -1,8 +1,9 @@
+import React, { useState } from 'react';
 import Expenses from "./components/Expense/Expenses";
 import NewExpense from "./components/NewExpense/NewExpense";
 const App = () => {
   // 프롭스 값
-  const expenses = [
+  const dummyExpenses = [
     {
       id: "e1",
       title: "Toilet Paper",
@@ -23,10 +24,14 @@ const App = () => {
       date: new Date(2021, 5, 12),
     },
   ];
+  // state 끌어오기
+  const [expenses, setExpenses] = useState(dummyExpenses);
   // 상향식 컴포넌트 통신
   const addExpenseHandler = (expense) => {
-    console.log('In app.js')
-    console.log(expense)
+    setExpenses((prevExpenses) => {
+      return [expense, ...prevExpenses];  // 새로운 아이템을 추가한다.);
+    }     
+    );
   };
   return (
     <div>

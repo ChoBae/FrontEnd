@@ -9,7 +9,7 @@ const ExpenseFilter = (props) => {
   return (
     <div className='expenses-filter'>
       <div className='expenses-filter__control'>
-        <label>Filter by year</label>
+        <label>선택 연도</label>
         {/*props.selected은 부모 컴포넌트에서 내가 설정한 값을 받아오고,
         onChange는 변화가 있을때 state를 끌어올린다. */}
         <select value={props.selected} onChange={dropDownChangeHandler}>

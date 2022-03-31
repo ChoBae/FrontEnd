@@ -23,7 +23,7 @@ const App = () => {
     UserData ={
       username: ud.username,
       userage : ud.userage
-      ...
+
     }
   };
   return (

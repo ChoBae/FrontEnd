@@ -17,12 +17,13 @@ const App = () => {
   };
 
   return (
-    <div>
+    // 랩핑 처리
+    <React.Fragment>
       {/* 유저 추가 컴포넌트 */}
       <AddUser onAddUser={addUserHandler}></AddUser>
       {/* 유저 리스트 컴포넌트 */}
       <UserList users={usersList} />
-    </div>
+    </React.Fragment>
   );
 };
 

@@ -54,7 +54,7 @@ const Login = (props) => {
   // const [passwordIsValid, setPasswordIsValid] = useState();
   const [formIsValid, setFormIsValid] = useState(false);
 
-  // useReducer 사용 -> 여러개의 state 값을 관리할때 좋은듯
+  // useReducer 사용 -> 여러개의 state 값을 관리할때 좋은듯 -> state를 여러가지 형태로 
   // useState와 비슷하게 두가지의 함수의 파라미터값이 주어지고, 인자로는 함수와, 초기값이 주어진다.
   // 인자의 함수같은 경우에는 해당 컴포넌트의 바깥에서 작업해준다.(내용이 관련이 없어서)
   const [emailState, dispatchEmail] = useReducer(emailReducer, {

@@ -1,23 +1,24 @@
-import {Fragment, useState} from 'react';
-import Header from './components/Layout/Header';
-import Meals from './components/Meals/Meals';
-import Cart from './components/Cart/Cart';
+import { useState } from "react";
+import Header from "./components/Layout/Header";
+import Meals from "./components/Meals/Meals";
+import Cart from "./components/Cart/Cart";
+import CartProvier from "./store/CartProvider";
 function App() {
-  // const [cartIsShown, setCartIsShown] = useState(false);
-  // const showCartHandler = () =>{
-  //   setCartIsShown(true);
-  // };
-  // const hideCartHandler = () => {
-  //   setCartIsShown(false);
-  // }
+  // 모달 밑 장바구니 온오프
+  const [cartIsShown, setCartIsShown] = useState(false);
+  const showCartHandler = () => {
+    setCartIsShown(true);
+  };
+  const hideCartHandler = () => {
+    setCartIsShown(false);
+  };
 
   return (
-    <Fragment>
-      {/* {cartIsShown && <Cart onClose={hideCartHandler}/>} */}
-      <Cart/>
-      <Header></Header>
+    <CartProvier>
+      {cartIsShown && <Cart onClose={hideCartHandler} />}
+      <Header onShowCart={showCartHandler}></Header>
       <Meals></Meals>
-    </Fragment>
+    </CartProvier>
   );
 }
 

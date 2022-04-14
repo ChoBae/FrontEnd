@@ -2,12 +2,12 @@ import { Fragment } from "react";
 import classes from "./Header.module.css"
 import mealImage from "../../assets/meals.jpg"
 import HeaderCartButton from "./HeaderCartButton";
-const Header = () => {
+const Header = (props) => {
     return(
         <Fragment>
             <header className={classes.header}>
                 <h1>리액트의 민족</h1>
-                <HeaderCartButton/>
+                <HeaderCartButton onClick={props.onShowCart}/>
             </header>
             {/* '-'은 .으로 처리할수없어서 대괄호로 처리함 */}
             <div className={classes[`main-image`]}>

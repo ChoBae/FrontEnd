@@ -1,57 +1,65 @@
-import { useRef, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 const SimpleInput = (props) => {
-  // form이 입력받았을때 input의 값을 받아오는 useRef
-  const NameInputRef = useRef("");
+  // 05.13 리팩토링 과정
   // useState
   // 이름을 입력할때마다 확인
   const [enteredName, setEnteredName] = useState("");
-  // 이름의 유효성을 확인
-  const [namevalid, setNameValid] = useState(false);
   // 인풋을 클릭했는지 확인
   const [enteredNameTouched, setEnterNameTouched] = useState(false);
+  // 전체 form 양식이 유효한지 체크
+  const [formIsValid, setFormIsValid] = useState(false);
+  // boolean 유효성 체크
+  // 이름의 유효성을 확인 -> 이전 useState로 확인했음
+  const enteredNameIsValid = enteredName.trim() !== "";
+  // 종합적인 유효성 체크(이름의 유효성, 인풋 포커싱 확인)
+  const nameInputIsInValid = !enteredNameIsValid && enteredNameTouched;
 
   useEffect(() => {
-    if (namevalid) {
-      console.log("이름의 입력값이 잘들어옴");
+    // 각각의 유효성을 체크하고 최종적으로 폼이 유효한지 체크한다.
+    // 체크할 유효성이 늘어나면 여기 추가해주면됨.
+    if (enteredNameIsValid){
+      setFormIsValid(true)
     }
-  }, [namevalid]);
+    else{
+      setFormIsValid(false)
+    }
+  }, [enteredNameIsValid]);
   // input의 값이 변경될때마다 변경
   const nameInputChangeHandler = (event) => {
     setEnteredName(event.target.value);
-    // enterName이 아닌 event.target.value을 사용하는 이유는 바로 변경값을 불리오지 못해서(비동기식) 
-    if (event.target.value.trim() !== "") {
-      setNameValid(true);
-    }
+    // // enterName이 아닌 event.target.value을 사용하는 이유는 바로 변경값을 불리오지 못해서(비동기식)
+    // if (event.target.value.trim() !== "") {
+    //   setNameValid(true);
+    // }
   };
   // 사용자가 input에서 포커싱을 잃었을때 확인
   const nameInputBlurHandler = (event) => {
     setEnterNameTouched(true);
-    // 
-    if (enteredName.trim() === "") {
-      setNameValid(false);
-    }
   };
   const formSubmissionHandler = (event) => {
     // form형식은 제출되었을때 웹을 리로드하는데 그 과정을 막아줌. (저장된 데이터가 사라지기 때문에)
     event.preventDefault();
+    // form이 제출되었을때는 인풋을 한번이라도 본 것이기 때문에
     setEnterNameTouched(true);
-
-    if (enteredName.trim() === "") {
-      setNameValid(false);
+    // 이름의 유효성이 false일때 return
+    if (!enteredNameIsValid) {
       return;
     }
-    setNameValid(true);
     // useState
     console.log(enteredName);
-    // useRef
-    const enteredValue = NameInputRef.current.value;
-    console.log(enteredValue);
+    // // useRef
+    // const enteredValue = NameInputRef.current.value;
+    // console.log(enteredValue);
     // NameInputRef.current.value = ''; * dom형식 자체를 변경 s하는 것이라서 바람직하지 않다.
+
+    // 초기화 과정
     // 입력되었을때 빈칸 만들기
     setEnteredName("");
+    // 입력되었을때 포커싱 초기값 초기화
+    setEnterNameTouched(false);
   };
-  const nameInputIsInValid = !namevalid && enteredNameTouched;
+  // 유효성체크 후 그에 맞는 css 변경
   const nameInputClasses = nameInputIsInValid
     ? "form-control invalid"
     : "form-control";
@@ -60,7 +68,7 @@ const SimpleInput = (props) => {
       <div className={nameInputClasses}>
         <label htmlFor="name">Your Name</label>
         <input
-          ref={NameInputRef}
+          // ref={NameInputRef}
           type="text"
           id="name"
           onChange={nameInputChangeHandler}
@@ -72,7 +80,7 @@ const SimpleInput = (props) => {
         )}
       </div>
       <div className="form-actions">
-        <button>Submit</button>
+        <button disabled={!formIsValid}>Submit</button>
       </div>
     </form>
   );

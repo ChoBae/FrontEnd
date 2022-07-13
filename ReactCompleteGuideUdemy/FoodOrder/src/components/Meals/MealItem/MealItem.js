@@ -4,9 +4,11 @@ import CartContext from "../../../store/cart-context";
 import classes from "./MealItem.module.css";
 import MealItemForm from "./MealItemForm";
 const MealItem = (props) => {
+  // useContext 사용 -> 변수 관리 용이
   const cartCtx = useContext(CartContext);
 
   const price = `${props.price}원`;
+  // 컨택스트에서 메뉴 가져오기
   const addToCartHandler = (amount) => {
     cartCtx.addItem({
       id: props.id,

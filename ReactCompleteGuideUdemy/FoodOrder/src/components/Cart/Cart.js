@@ -4,7 +4,7 @@ import CartItem from "./CartItem";
 import CartContext from "../../store/cart-context";
 import Modal from "../UI/Modal";
 import classes from "./Cart.module.css";
-
+// 카트 컴포넌트 -> 
 const Cart = (props) => {
   const cartCtx = useContext(CartContext);
   const totalAmount = `${cartCtx.totalAmount}원`;
